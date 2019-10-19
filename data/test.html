@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ESP32-Webserver</title>
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <h1><center>Test ESP32 web server - led is %STATE%</center></h1>
+  <form method="GET" enctype="multipart/form-data">
+    <input type="button" value="On" 
+    onclick="window.location.href='?led_on'" style="background-color: yellowgreen"/>
+    <input type="button" value="Off" 
+    onclick="window.location.href='?led_off'" style="background-color:tomato"/>
+    <br>
+    <e
+    <div class="dropdown">
+      <button class="dropbtn">Dropdown</button>
+      <div class="dropdown-content" type="submit">
+        <a href="?light">Light</a>
+        <a href="?jiggle">Jiggle</a>
+        <a href="?glitter">Rainbow Glitter</a>
+        <a href="?march">Rainbow March</a>
+      </div>
+    </div> 
+  </form>
+</body>
+</html>
