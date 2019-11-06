@@ -8,6 +8,29 @@
 #include <LightShow.h>
 #include <BLEDevice.h>
 
+DEFINE_GRADIENT_PALETTE( quagga_gp ) {
+    0,   1,  9, 84,
+   40,  42, 24, 72,
+   84,   6, 58,  2,
+  168,  88,169, 24,
+  211,  42, 24, 72,
+  255,   1,  9, 84};
+
+  DEFINE_GRADIENT_PALETTE( aquamarinemermaid_gp ) {
+    0,  23,  4, 32,
+   63,  98, 31, 52,
+  127, 224,138, 24,
+  191,   7, 55,164,
+  255,  23,  4, 32};
+
+DEFINE_GRADIENT_PALETTE( catfairy_gp ) {
+    0,  74,124, 85,
+   76, 152,128, 44,
+  127, 144, 97, 96,
+  178, 100, 72,102,
+  232,  78, 90,122,
+  255,  78, 90,122};
+
 // The amount of LEDs in the setup
 #define NUM_LEDS 60
 #define LED_TYPE WS2812B
@@ -19,9 +42,36 @@
 const char* SSID = "winstonia";
 const char* PASS = "Polycom1";
 const int internal_led = 2;
+long previousMillis = 0;
+int interval = 1000;
 
 // WiFiServer server(80);
 AsyncWebServer server(80);
+AsyncWebSocket ws("/ws");
+AsyncWebSocketClient * globalClient = NULL;
+AsyncWebParameter* p;
+CRGBPalette16 palette = PartyColors_p;
+String msg = "";
+
+// websocket event //
+void onWsEvent(AsyncWebSocket * server, AsyncWebSocketClient * client, AwsEventType type, void * arg, uint8_t *data, size_t len){
+ 
+  if(type == WS_EVT_CONNECT){
+ 
+    Serial.println("Websocket client connection received");
+    globalClient = client;
+ 
+  } else if(type == WS_EVT_DISCONNECT){
+ 
+    Serial.println("Websocket client connection finished");
+    globalClient = NULL;
+ 
+  } else if(type == WS_EVT_DATA){
+        for (size_t i = 0; i < len; i++) {
+          msg += (char) data[i];
+        }
+  }
+}
 
 // BLEclient
 
@@ -181,6 +231,10 @@ void setup() {
     fill_solid(leds, NUM_LEDS, CRGB::Black);
     FastLED.show();
 
+    //setup websocket event//
+    ws.onEvent(onWsEvent);
+    server.addHandler(&ws);
+
     // Route to load site index file
     server.on("/html", HTTP_GET, [](AsyncWebServerRequest *request){
         if (request->hasParam("led_on")) {
@@ -195,6 +249,7 @@ void setup() {
             // fill_solid(leds, NUM_LEDS, CRGB::Black);
             // FastLED.show();
             mode = 0;
+
             led_state = "off";
         }
         if (request->hasParam("light")) {
@@ -237,19 +292,101 @@ void setup() {
             effect=7;
             led_state = "Up_down";
         }
-        if (request->hasParam("learning_p2")) {
+        if (request->hasParam("fire_dep")) {
             digitalWrite(internal_led,LOW);
             effect=8;
-            led_state = "learning_p2";
+            led_state = "fire_dep";
+        }
+        if (request->hasParam("police_dep")) {
+            digitalWrite(internal_led,LOW);
+            effect=9;
+            led_state = "police_dep";
+        }
+        if (request->hasParam("maayan_rainbow")) {
+            digitalWrite(internal_led,LOW);
+            effect=10;
+            led_state = "maayan_rainbow";
+        }
+        if (request->hasParam("cubes")) {
+            digitalWrite(internal_led,LOW);
+            effect=11;
+            led_state = "cubes";
+        }
+        if (request->hasParam("squares")) {
+            digitalWrite(internal_led,LOW);
+            effect=12;
+            led_state = "squares";
+        }
+        if (request->hasParam("squares")) {
+            digitalWrite(internal_led,LOW);
+            effect=12;
+            led_state = "squares";
+        }
+        if (request->hasParam("wild")) {
+            digitalWrite(internal_led,LOW);
+            effect=13;
+            led_state = "wild";
+        }
+        if (request->hasParam("palette")) {
+            p = request->getParam(1);
+            if (p->name() == "HeatColors_p"){
+                palette = HeatColors_p;
+            }
+            else if (p->name() == "RainbowStripesColors_p"){
+                palette = RainbowStripesColors_p;
+            }
+            else if (p->name() == "OceanColors_p"){
+                palette = OceanColors_p;
+            }
+            else if (p->name() == "ForestColors_p"){
+                palette = ForestColors_p;
+            }
+            else if (p->name() == "PartyColors_p"){
+                palette = PartyColors_p;
+            }
+            else if (p->name() == "quagga_gp"){
+                palette = quagga_gp;
+            }
+            else if (p->name() == "aquamarinemermaid_gp"){
+                palette = aquamarinemermaid_gp;
+            }
+            else if (p->name() == "catfairy_gp"){
+                palette = catfairy_gp;
+            }
         }
 
-        request->send(SPIFFS, "/test2.html", String(), false, processor);
+        request->send(SPIFFS, "/lamp.html", String(), false, processor);
         //request->send(SPIFFS, "/test.html", "text/html");
     });
 
     // Route to load style.css file
-    server.on("/style2.css", HTTP_GET, [](AsyncWebServerRequest *request){
-        request->send(SPIFFS, "/style2.css", "text/css");
+    server.on("/style_new.css", HTTP_GET, [](AsyncWebServerRequest *request){
+        request->send(SPIFFS, "/style_new.css", "text/css");
+    });
+
+        // Route to load style.css file
+    server.on("/manifest.json", HTTP_GET, [](AsyncWebServerRequest *request){
+        request->send(SPIFFS, "/manifest.json", "text/json");
+    });
+
+    server.on("/favicon.ico", HTTP_GET, [](AsyncWebServerRequest *request){
+        request->send(SPIFFS, "/favicon.ico", "image/x-icon");
+    });
+
+    server.on("/officelight.png", HTTP_GET, [](AsyncWebServerRequest *request){
+        request->send(SPIFFS, "/officelight.png", "image/png");
+    });
+
+    server.on("/officelight128.png", HTTP_GET, [](AsyncWebServerRequest *request){
+        request->send(SPIFFS, "/officelight128.png", "image/png");
+    });
+
+    server.on("/officelight256.png", HTTP_GET, [](AsyncWebServerRequest *request){
+        request->send(SPIFFS, "/officelight256.png", "image/png");
+    });
+
+    server.on("/officelight512.png", HTTP_GET, [](AsyncWebServerRequest *request){
+        request->send(SPIFFS, "/officelight512.png", "image/png");
     });
 
     server.begin();
@@ -258,7 +395,15 @@ void setup() {
 
 void loop() {
     ArduinoOTA.handle();
-
+    unsigned long currentMillis = millis();
+    if (currentMillis - previousMillis > interval) {
+        if(globalClient != NULL && globalClient->status() == WS_CONNECTED){
+                if(mode==1){globalClient->text("on");}
+                else{globalClient->text("off");}
+            }
+    }
+    if(msg=="on"){mode=1;}
+    else if(msg=="off"){mode=0;}
     // // search for BLE devices every 3 seconds //
     // foundDevices = pBLEScan->start(3); //Scan for 3 seconds to find the Fitness band 
 
@@ -315,7 +460,7 @@ void loop() {
                     default:
                     break;
                 case 1: // juggle
-                    juggle_lib(leds, NUM_LEDS);
+                    juggle_lib(leds, NUM_LEDS, palette);
                     FastLED.show();
                     break;
                 case 2: // rainbow glitter
@@ -335,18 +480,42 @@ void loop() {
                     FastLED.show();
                     break;
                 case 6: //learning
-                    learning_p(leds, NUM_LEDS);
+                    learning_p(leds, NUM_LEDS, palette);
                     FastLED.show();
                     break;
                 case 7: //up_down
-                    up_down(leds, NUM_LEDS);
+                    up_down(leds, NUM_LEDS, palette, gHue);
+                    gHue = gHue+10;
                     // FastLED.show();
                     break;
-                case 8: //learning_p2
-                    learning_p2(leds, NUM_LEDS);
+                case 8: //fire_dep
+                    fire_dep(leds, NUM_LEDS);
+                    FastLED.show();
+                    break;
+                case 9: //police_dep
+                    police_dep(leds, NUM_LEDS);
+                    FastLED.show();
+                    break;
+                case 10: //maayan rainbow
+                    maayan_rainbow(leds, NUM_LEDS);
+                    FastLED.show();
+                    break;
+                case 11: //cubes
+                    cubes(leds, NUM_LEDS, palette, gHue);
+                    FastLED.show();
+                    gHue = gHue+90;
+                    break;
+                case 12: //squares
+                    squares(leds, NUM_LEDS, palette);
+                    FastLED.show();
+                    break;
+                case 13: //squares
+                    wild(leds, NUM_LEDS, palette);
                     FastLED.show();
                     break;
             } 
 
     }
+    if(gHue==255){gHue=0;}
+    
 }

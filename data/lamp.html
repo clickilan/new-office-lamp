@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<script>
+    var palettes =[['rainbow','RainbowStripesColors_p'],['heat','HeatColors_p'],['party','PartyColors_p'],
+    ['ocean','OceanColors_p'],['forest','ForestColors_p'],['quagga','quagga_gp'],['aqua-mermaid','aquamarinemermaid_gp'],['catfairy','catfairy_gp']];
+    var effects = [['light','light'],['juggle','jiggle'],['wild','wild'],['glitter','glitter'],['march','march'],
+    ['noise_16','noise_16'],['blendwave','blendwave'],['up_down','up_down'],['learning_p','learning_p'],
+    ['fire_dep','fire_dep'],['police_dep','police_dep'],['cubes','cubes'],['squares','squares']];
+    function printBtn(rType,lista, btnColor, idSelect) {
+        for (var i = 0; i < lista.length; i++) {
+            var btn = document.createElement("a");
+            var t = document.createTextNode(lista[i][0]);
+            btn.className = "button";
+            btn.style.backgroundColor = btnColor;
+            btn.id = lista[i][1];
+            btn.href = "?"+rType+"&"+lista[i][1];
+            if(lista!=palettes){btn.appendChild(t);}
+            // document.body.appendChild(btn);
+            document.getElementById(idSelect).appendChild(btn);
+        }
+    }
+    // websocket function //
+    var url = "ws://192.168.1.124/ws";
+    var ws = new WebSocket(url);
+    ws.onmessage = function(evt) {
+            if(evt.data=="on"){document.getElementById("hadas_icon").id = "hadas_icon_on";}
+            if(evt.data=="on"){document.getElementById("hadas_icon").id = "hadas_icon_off";}
+            // document.getElementById("display").innerHTML  = evt.data;
+        };
+    function socketSend(message) {
+        ws.send(message);
+    }
+</script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style_new.css">
+    <link rel="manifest" href="manifest.json">
+    <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Office-light</title>
+</head>
+<body>
+    <nav>
+            <div class="logo">
+                    <h4>Office Light</h4>
+                </div>
+    </nav>
+    <!-- <h1>Office Light</h1> -->
+    <div>
+        <h2 id="display">test</h2>
+        <img src="officelight128.png" id="hadas_icon" onclick="socketSend('on')">
+    </div>
+    <!-- <hr> -->
+    <div class="box" id="on_off">
+        <a id="on" href="?led_on" class="button">on</a>
+        <a id="off" href="?led_off" class="button">off</a>
+    </div>
+    <!-- <hr> -->
+    <div class="container">
+        <div class="box">
+            <h2>Effects</h2>
+            <div  class="box-grid" id="effects">
+            <script>
+            printBtn("effect", effects, '#f39422', 'effects')
+            </script>
+            </div>
+        </div>
+        <!-- <hr> -->
+        <div class="box">
+            <h2>Palettes</h2>
+            <div class="box-grid" id="palettes">
+            <script>
+            printBtn("palette", palettes, '#f39422', 'palettes')
+            </script>        
+            </div>    
+        </div>
+    </div>
+</body>
+</html>

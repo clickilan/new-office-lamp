@@ -1,0 +1,241 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    /* box-sizing: border-box; */
+    font-family: 'Poppins', sans-serif;}
+
+html {
+    font-family:  Helvetica, Arial, sans-serif;
+    text-align: center;
+    background-color: #537ec5;
+}
+
+h1,h2 {
+    color: white;
+    text-shadow: 1px 1px 2px #0a3a16;
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 8vh;
+    background-color: #293a80;
+    
+}
+
+.logo {
+    text-transform: uppercase;
+    letter-spacing: 5px;
+}
+
+.container {
+    display: flex;
+    flex-wrap: nowrap;
+    /* flex-direction: column; */
+    margin: 10vw 3vh;
+}
+
+@media screen and (max-width: 600px) {
+    .container {
+        flex-direction: column;
+    }
+}
+
+.box {
+    /* text-align: center;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-content: center; */
+    /* display: inline; */
+}
+
+.box-grid {
+    /* 
+    display: inline-flex;
+    align-content: center; */
+    /* display: flex; */
+    /* flex-wrap: wrap; */
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.button {
+    /* flex: 1 1 auto; */
+    width: 50px; height: 50px;
+    margin: 5px 3px;
+    padding: 30px;
+    transition: 0.5s;
+    border: none;
+    color: black;
+    background-color: darkmagenta;
+    padding: 15px 15px;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 2px 2px 1px 1px rgba(0, 0, 0, 0.1);
+    background-size: 200% auto;
+    border-radius: 6px;
+}
+
+.button:hover {
+    /* filter: grayscale(); */
+    /* background-blend-mode: screen; */
+    background-position: right center;
+}
+
+#hadas_icon {
+    margin: 20px;
+}
+
+/* #hadas_icon:hover {
+    filter: grayscale();
+    /* transform: scale(1.1); */
+    /* transform: scale(1); */
+    /* filter: drop-shadow(0px 0px 10px white); */
+} */
+
+#hadas_icon:active {
+    filter: drop-shadow(0px 0px 10px white);
+}
+
+#hadas_icon_on {
+    margin: 20px;
+    filter: drop-shadow(0px 0px 10px white);
+}
+
+#hadas_icon_off {
+    margin: 20px;
+    filter: none;
+}
+
+#off {
+    background-color: #EA4335;
+    color: snow;
+}
+
+#on {
+    background-color: #34A853;
+    color: snow;
+}
+
+#RainbowStripesColors_p {
+    /* color: snow; */
+    background-image: linear-gradient(to right,
+     #FF0000 0%,
+     #AB5500 12.5%, 
+     #ABAB00 25%, 
+     #00FF00 37.5%, 
+     #00AB55 50%, 
+     #0000FF 62.5%, 
+     #5500AB 75%, 
+     #AB0055 87.5%, 
+     #FF0000 100%);
+}
+#HeatColors_p {
+    /* color: snow; */
+    background-image: linear-gradient(to right,
+    #000000,
+    #330000, 
+    #660000, 
+    #990000, 
+    #CC0000, 
+    #FF0000,
+    #FF3300, 
+    #FF6600, 
+    #FF9900, 
+    #FFCC00, 
+    #FFFF00,
+    #FFFF33, 
+    #FFFF66, 
+    #FFFF99, 
+    #FFFFCC, 
+    #FFFFFF);
+}
+#PartyColors_p {
+    color: snow;
+    background-image: linear-gradient(to right,
+    #5500AB, 
+    #84007C, 
+    #B5004B, 
+    #E5001B,
+    #E81700, 
+    #B84700, 
+    #AB7700, 
+    #ABAB00,
+    #AB5500, 
+    #DD2200, 
+    #F2000E, 
+    #C2003E,
+    #8F0071, 
+    #5F00A1, 
+    #2F00D0, 
+    #0007F9);
+}
+#ForestColors_p {
+    color: snow;
+    background-image: linear-gradient(to right,
+    Darkgreen, 
+    DarkOliveGreen, 
+    DarkGreen, 
+    Green,
+    ForestGreen,
+    OliveDrab,
+    Green,
+    SeaGreen,
+    MediumAquamarine,
+    LimeGreen,
+    YellowGreen,
+    LightGreen,
+    LawnGreen,
+    MediumAquamarine,
+    ForestGreen);
+}
+#OceanColors_p {
+    color: snow;
+    background-image: linear-gradient(to right,
+    MidnightBlue,
+    DarkBlue,
+    MidnightBlue,
+    Navy,
+    DarkBlue,
+    MediumBlue,
+    SeaGreen,
+    Teal,
+    CadetBlue,
+    Blue,
+    DarkCyan,
+    CornflowerBlue, 
+    Aquamarine,
+    SeaGreen,
+    Aqua,
+    LightSkyBlue);
+}
+#aquamarinemermaid_gp {
+    color: snow;
+    background-image: linear-gradient(to right, 
+    rgb(23,  4, 32), 
+    rgb(98, 31, 52), 
+    rgb(224,138, 24), 
+    rgb(7, 55,164), 
+    rgb(23,  4, 32));
+}
+#quagga_gp {
+    color: snow;
+    background-image: linear-gradient(to right, 
+    rgb(1,  9, 84), 
+    rgb(42, 24, 72), 
+    rgb(6, 58,  2), 
+    rgb(88,169, 24),
+    rgb(42, 24, 72),
+    rgb(1,  9, 84));
+}
+#catfairy_gp {
+    color: snow;
+    background-image: linear-gradient(to right, 
+    rgb(74,124, 85), 
+    rgb(152,128, 44), 
+    rgb(144, 97, 96), 
+    rgb(100, 72,102),
+    rgb(78, 90,122),
+    rgb(78, 90,122));
+}

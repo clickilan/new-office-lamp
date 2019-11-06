@@ -1,0 +1,31 @@
+{
+    "name":"Office Light",
+    "short_name":"Officelight",
+    "Start_url":"lamp.html",
+    "display":"standalone",
+    "background_color":"#4285F4",
+    "theme_color":"#4285F4",
+    "orientation":"portrait-primary",
+    "icons": [
+        {    
+            "src": "/officelight.png",
+            "type": "image/png",
+            "sizes": "64x64"
+        },
+        {    
+            "src": "/officelight128.png",
+            "type": "image/png",
+            "sizes": "128x128"
+        },
+        {    
+            "src": "/officelight256.png",
+            "type": "image/png",
+            "sizes": "256x256"
+        },
+        {    
+            "src": "/officelight512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ]
+}
