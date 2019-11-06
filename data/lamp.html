@@ -11,6 +11,7 @@
             var btn = document.createElement("a");
             var t = document.createTextNode(lista[i][0]);
             btn.className = "button";
+            // btn.type = "button";
             btn.style.backgroundColor = btnColor;
             btn.id = lista[i][1];
             btn.href = "?"+rType+"&"+lista[i][1];
@@ -22,6 +23,7 @@
     // websocket function //
     var url = "ws://192.168.1.124/ws";
     var ws = new WebSocket(url);
+    WebSocket
     ws.onmessage = function(evt) {
             if(evt.data=="on"){document.getElementById("hadas_icon").id = "hadas_icon_on";}
             if(evt.data=="on"){document.getElementById("hadas_icon").id = "hadas_icon_off";}
@@ -54,8 +56,8 @@
     </div>
     <!-- <hr> -->
     <div class="box" id="on_off">
-        <a id="on" href="?led_on" class="button">on</a>
-        <a id="off" href="?led_off" class="button">off</a>
+        <a id="on" href="?led_on" type='button' class="button">on</a>
+        <a id="off" href="?led_off" type='button' class="button">off</a>
     </div>
     <!-- <hr> -->
     <div class="container">
