@@ -21,17 +21,36 @@
         }
     }
     // websocket function //
-    var url = "ws://192.168.1.124/ws";
-    var ws = new WebSocket(url);
-    WebSocket
-    ws.onmessage = function(evt) {
-            if(evt.data=="on"){document.getElementById("hadas_icon").id = "hadas_icon_on";}
-            if(evt.data=="on"){document.getElementById("hadas_icon").id = "hadas_icon_off";}
-            // document.getElementById("display").innerHTML  = evt.data;
-        };
-    function socketSend(message) {
-        ws.send(message);
+    // var url = "ws://192.168.1.124/ws";
+    // var ws = new WebSocket(url);
+    // WebSocket
+    // ws.onmessage = function(evt) {
+    //         if(evt.data=="on"){document.getElementById("hadas_icon").id = "hadas_icon_on";}
+    //         if(evt.data=="on"){document.getElementById("hadas_icon").id = "hadas_icon_off";}
+    //         // document.getElementById("display").innerHTML  = evt.data;
+    //     };
+    // function socketSend(message) {
+    //     ws.send(message);
+    // }
+
+    // Call a function repetatively with 2 Second interval
+    setInterval(function() {getState()}, 2000); //2000mSeconds update rate
+    // setInterval(function(){console.log("test")}, 2000);
+
+    function getState() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function(){
+            if (this.readyState == 4 & this.status == 200){
+                console.log(this.response);
+                if (this.response==1){document.getElementById("hadas_icon").id = "hadas_icon_on";}
+                else if (this.response==0){document.getElementById("hadas_icon").id = "hadas_icon_off";}
+
+            }
+        }
+        xhttp.open("GET","state", true);
+        xhttp.send();
     }
+
 </script>
 <head>
     <meta charset="UTF-8">

@@ -53,27 +53,27 @@ AsyncWebSocket ws("/ws");
 AsyncWebSocketClient * globalClient = NULL;
 AsyncWebParameter* p;
 CRGBPalette16 palette = PartyColors_p;
-String msg = "";
+// String msg = "";
 
 // websocket event //
-void onWsEvent(AsyncWebSocket * server, AsyncWebSocketClient * client, AwsEventType type, void * arg, uint8_t *data, size_t len){
+// void onWsEvent(AsyncWebSocket * server, AsyncWebSocketClient * client, AwsEventType type, void * arg, uint8_t *data, size_t len){
  
-  if(type == WS_EVT_CONNECT){
+//   if(type == WS_EVT_CONNECT){
  
-    Serial.println("Websocket client connection received");
-    globalClient = client;
+//     Serial.println("Websocket client connection received");
+//     globalClient = client;
  
-  } else if(type == WS_EVT_DISCONNECT){
+//   } else if(type == WS_EVT_DISCONNECT){
  
-    Serial.println("Websocket client connection finished");
-    globalClient = NULL;
+//     Serial.println("Websocket client connection finished");
+//     globalClient = NULL;
  
-  } else if(type == WS_EVT_DATA){
-        for (size_t i = 0; i < len; i++) {
-          msg += (char) data[i];
-        }
-  }
-}
+//   } else if(type == WS_EVT_DATA){
+//         for (size_t i = 0; i < len; i++) {
+//           msg += (char) data[i];
+//         }
+//   }
+// }
 
 // BLEclient
 
@@ -234,8 +234,8 @@ void setup() {
     FastLED.show();
 
     //setup websocket event//
-    ws.onEvent(onWsEvent);
-    server.addHandler(&ws);
+    // ws.onEvent(onWsEvent);
+    // server.addHandler(&ws);
 
     // Route to load site index file
     server.on("/html", HTTP_GET, [](AsyncWebServerRequest *request){
@@ -391,6 +391,10 @@ void setup() {
         request->send(SPIFFS, "/officelight512.png", "image/png");
     });
 
+    server.on("/state", HTTP_GET, [](AsyncWebServerRequest *request){
+        request->send(200, "text/plain", String(mode));
+    });
+
     server.begin();
 
 }
@@ -399,15 +403,15 @@ void loop() {
     ArduinoOTA.handle();
     unsigned long currentMillis = millis();
     // websocket update lamp status //
-    if (currentMillis - previousMillis > interval) { // publish every *interval* miliseconds
-        if(globalClient != NULL && globalClient->status() == WS_CONNECTED){
-                if(mode==1){globalClient->text("on");}
-                else{globalClient->text("off");}
-            }
-    }
+    // if (currentMillis - previousMillis > interval) { // publish every *interval* miliseconds
+    //     if(globalClient != NULL && globalClient->status() == WS_CONNECTED){
+    //             if(mode==1){globalClient->text("on");}
+    //             else{globalClient->text("off");}
+    //         }
+    // }
     // turn lamp on/off by websocket command //
-    if(msg=="on"){mode=1;}
-    else if(msg=="off"){mode=0;}
+    // if(msg=="on"){mode=1;}
+    // else if(msg=="off"){mode=0;}
     // // search for BLE devices every 3 seconds //
     // foundDevices = pBLEScan->start(3); //Scan for 3 seconds to find the Fitness band 
 
