@@ -8,6 +8,8 @@
 #include <LightShow.h>
 #include <BLEDevice.h>
 
+// color gradients for lamp //
+
 DEFINE_GRADIENT_PALETTE( quagga_gp ) {
     0,   1,  9, 84,
    40,  42, 24, 72,
@@ -396,12 +398,14 @@ void setup() {
 void loop() {
     ArduinoOTA.handle();
     unsigned long currentMillis = millis();
-    if (currentMillis - previousMillis > interval) {
+    // websocket update lamp status //
+    if (currentMillis - previousMillis > interval) { // publish every *interval* miliseconds
         if(globalClient != NULL && globalClient->status() == WS_CONNECTED){
                 if(mode==1){globalClient->text("on");}
                 else{globalClient->text("off");}
             }
     }
+    // turn lamp on/off by websocket command //
     if(msg=="on"){mode=1;}
     else if(msg=="off"){mode=0;}
     // // search for BLE devices every 3 seconds //
