@@ -42,13 +42,25 @@
         xhttp.onreadystatechange = function(){
             if (this.readyState == 4 & this.status == 200){
                 console.log(this.response);
-                if (this.response==1){document.getElementById("hadas_icon").id = "hadas_icon_on";}
-                else if (this.response==0){document.getElementById("hadas_icon").id = "hadas_icon_off";}
+                if (this.response==1){document.getElementById("hadas_icon_off").id = "hadas_icon_on";}
+                else if (this.response==0){document.getElementById("hadas_icon_on").id = "hadas_icon_off";}
 
             }
         }
         xhttp.open("GET","state", false);
         xhttp.send();
+    }
+
+    function setOn(b) {
+        var xon = new XMLHttpRequest();
+        // xon.timeout = 250;
+        xon.onreadystatechange = function(){
+        //     if (this.readyState == 4 & this.status == 200){
+
+        //     }
+        }
+        xon.open("GET",b);
+        xon.send();
     }
 
     // function sendButton(b) {
@@ -77,15 +89,15 @@
     </nav>
     <!-- <h1>Office Light</h1> -->
     <div>
-        <h2 id="display">test</h2>
-        <img src="officelight128.png" id="hadas_icon">
+        <!-- <h2 id="display">test</h2> -->
+        <img src="officelight128.png" id="hadas_icon_off">
     </div>
     <!-- <hr> -->
     <div class="box" id="on_off">
-        <a id="on" href="?led_on" type='button' class="button">on</a>
-        <!-- <a id="on" onclick="getState('on')" type="button" class="button">on</a> -->
-        <a id="off" href="?led_off" type='button' class="button">off</a>
-        <!-- <a id="off" onclick="getState('off')" type="button" class="button">off</a> -->
+        <!-- <a id="on" href="?led_on" type='button' class="button">on</a> -->
+        <a id="on" onclick="setOn('on')" type="button" class="button">on</a>
+        <!-- <a id="off" href="?led_off" type='button' class="button">off</a> -->
+        <a id="off" onclick="setOn('off')" type="button" class="button">off</a>
     </div>
     <!-- <hr> -->
     <div class="container">

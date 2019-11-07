@@ -239,21 +239,21 @@ void setup() {
 
     // Route to load site index file
     server.on("/html", HTTP_GET, [](AsyncWebServerRequest *request){
-        if (request->hasParam("led_on")) {
-            digitalWrite(internal_led,HIGH);
-            // fill_solid(leds, NUM_LEDS, CRGB(0,0,100));
-            // FastLED.show();
-            mode = 1;
-            led_state = "on";
-        };
-        if (request->hasParam("led_off")) {
-            digitalWrite(internal_led,LOW);
-            // fill_solid(leds, NUM_LEDS, CRGB::Black);
-            // FastLED.show();
-            mode = 0;
+        // if (request->hasParam("led_on")) {
+        //     digitalWrite(internal_led,HIGH);
+        //     // fill_solid(leds, NUM_LEDS, CRGB(0,0,100));
+        //     // FastLED.show();
+        //     mode = 1;
+        //     led_state = "on";
+        // }
+        // if (request->hasParam("led_off")) {
+        //     digitalWrite(internal_led,LOW);
+        //     // fill_solid(leds, NUM_LEDS, CRGB::Black);
+        //     // FastLED.show();
+        //     mode = 0;
 
-            led_state = "off";
-        }
+        //     led_state = "off";
+        // }
         if (request->hasParam("light")) {
             digitalWrite(internal_led,LOW);
             effect=0;
@@ -397,10 +397,12 @@ void setup() {
 
     server.on("/on", HTTP_GET, [](AsyncWebServerRequest *request){
         mode=1;
+        request->send(200);
     });
 
     server.on("/off", HTTP_GET, [](AsyncWebServerRequest *request){
         mode=0;
+        request->send(200);
     });
 
     server.begin();
