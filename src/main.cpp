@@ -395,6 +395,14 @@ void setup() {
         request->send(200, "text/plain", String(mode));
     });
 
+    server.on("/on", HTTP_GET, [](AsyncWebServerRequest *request){
+        mode=1;
+    });
+
+    server.on("/off", HTTP_GET, [](AsyncWebServerRequest *request){
+        mode=0;
+    });
+
     server.begin();
 
 }

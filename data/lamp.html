@@ -47,9 +47,16 @@
 
             }
         }
-        xhttp.open("GET","state", true);
+        xhttp.open("GET","state", false);
         xhttp.send();
     }
+
+    // function sendButton(b) {
+    //     var xhttpb = new XMLHttpRequest();
+    //     xhttpb.open("GET",b, true);
+    //     xhttpb.send();
+
+    // }
 
 </script>
 <head>
@@ -71,12 +78,14 @@
     <!-- <h1>Office Light</h1> -->
     <div>
         <h2 id="display">test</h2>
-        <img src="officelight128.png" id="hadas_icon" onclick="socketSend('on')">
+        <img src="officelight128.png" id="hadas_icon">
     </div>
     <!-- <hr> -->
     <div class="box" id="on_off">
         <a id="on" href="?led_on" type='button' class="button">on</a>
+        <!-- <a id="on" onclick="getState('on')" type="button" class="button">on</a> -->
         <a id="off" href="?led_off" type='button' class="button">off</a>
+        <!-- <a id="off" onclick="getState('off')" type="button" class="button">off</a> -->
     </div>
     <!-- <hr> -->
     <div class="container">
