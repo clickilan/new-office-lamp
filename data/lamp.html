@@ -14,7 +14,24 @@
             // btn.type = "button";
             btn.style.backgroundColor = btnColor;
             btn.id = lista[i][1];
-            btn.href = "?"+rType+"&"+lista[i][1];
+            var cc = ['light','jiggle','wild','glitter','march','noise_16','blendwave','up_down','learning_p','fire_dep','police_dep','cubes','squares'];
+            console.log(cc[i]);
+
+            if(btn.addEventListener){
+                btn.addEventListener('click', function(){
+                    setOn(cc[i]);
+                });
+            }
+            else if(btn.attachEvent){
+                btn.attachEvent('onclick', function(){
+                    setOn(cc[i]);
+                });
+            }
+
+            // btn.onclick = function() { setOn(cc[3]); };
+            // btn.addEventListener("click", setOn(cc[3]), false);
+            // btn.onclick = function() { setOn("?"+lista[i][1]) };
+            // btn.href = "?"+rType+"&"+lista[i][1];
             if(lista!=palettes){btn.appendChild(t);}
             // document.body.appendChild(btn);
             document.getElementById(idSelect).appendChild(btn);
@@ -41,7 +58,6 @@
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function(){
             if (this.readyState == 4 & this.status == 200){
-                console.log(this.response);
                 if (this.response==1){document.getElementById("hadas_icon_off").id = "hadas_icon_on";}
                 else if (this.response==0){document.getElementById("hadas_icon_on").id = "hadas_icon_off";}
 
@@ -98,14 +114,26 @@
         <a id="on" onclick="setOn('on')" type="button" class="button">on</a>
         <!-- <a id="off" href="?led_off" type='button' class="button">off</a> -->
         <a id="off" onclick="setOn('off')" type="button" class="button">off</a>
+        <!-- <a id="test" onclick="setOn('?jiggle')" type="button" class="button">off</a> -->
     </div>
     <!-- <hr> -->
     <div class="container">
         <div class="box">
             <h2>Effects</h2>
             <div  class="box-grid" id="effects">
+            <a id="light" onclick="setOn('light')" type="button" class="button">light</a>
+            <a id="jiggle" onclick="setOn('jiggle')" type="button" class="button">jiggle</a>
+            <a id="wild" onclick="setOn('wild')" type="button" class="button">wild</a>
+            <a id="glitter" onclick="setOn('glitter')" type="button" class="button">glitter</a>
+            <a id="march" onclick="setOn('march')" type="button" class="button">march</a>
+            <a id="blendwave" onclick="setOn('blendwave')" type="button" class="button">blendwave</a>
+            <a id="up_down" onclick="setOn('up_down')" type="button" class="button">up_down</a>
+            <a id="learning_p" onclick="setOn('learning_p')" type="button" class="button">learning_p</a>
+            <a id="fire_dep" onclick="setOn('fire_dep')" type="button" class="button">fire_dep</a>
+            <a id="police_dep" onclick="setOn('police_dep')" type="button" class="button">police_dep</a>
+            <a id="cubes" onclick="setOn('cubes')" type="button" class="button">cubes</a>
+            <a id="squares" onclick="setOn('squares')" type="button" class="button">squares</a>
             <script>
-            printBtn("effect", effects, '#f39422', 'effects')
             </script>
             </div>
         </div>
@@ -113,8 +141,16 @@
         <div class="box">
             <h2>Palettes</h2>
             <div class="box-grid" id="palettes">
+            <a id="RainbowStripesColors_p" onclick="setOn('RainbowStripesColors_p')" type="button" class="button">rainbow</a>
+            <a id="HeatColors_p" onclick="setOn('HeatColors_p')" type="button" class="button">heat</a>
+            <a id="PartyColors_p" onclick="setOn('PartyColors_p')" type="button" class="button">party</a>
+            <a id="OceanColors_p" onclick="setOn('OceanColors_p')" type="button" class="button">ocean</a>
+            <a id="ForestColors_p" onclick="setOn('ForestColors_p')" type="button" class="button">forest</a>
+            <a id="quagga_gp" onclick="setOn('quagga_gp')" type="button" class="button">quagga</a>
+            <a id="aquamarinemermaid_gp" onclick="setOn('aquamarinemermaid_gp')" type="button" class="button">aqua-mermaid</a>
+            <a id="catfairy_gp" onclick="setOn('catfairy_gp')" type="button" class="button">catfairy</a>
             <script>
-            printBtn("palette", palettes, '#f39422', 'palettes')
+            // printBtn("palette", palettes, '#f39422', 'palettes')
             </script>        
             </div>    
         </div>

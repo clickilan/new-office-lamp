@@ -405,6 +405,116 @@ void setup() {
         request->send(200);
     });
 
+    server.on("/light", HTTP_GET, [](AsyncWebServerRequest *request){
+        effect=0;
+        request->send(200);
+    });
+
+    server.on("/jiggle", HTTP_GET, [](AsyncWebServerRequest *request){
+        effect=1;
+        request->send(200);
+    });
+
+    server.on("/glitter", HTTP_GET, [](AsyncWebServerRequest *request){
+        effect=2;
+        request->send(200);
+    });
+
+    server.on("/march", HTTP_GET, [](AsyncWebServerRequest *request){
+        effect=3;
+        request->send(200);
+    });
+
+    server.on("/noise_16", HTTP_GET, [](AsyncWebServerRequest *request){
+        effect=4;
+        request->send(200);
+    });
+
+    server.on("/blendwave", HTTP_GET, [](AsyncWebServerRequest *request){
+        effect=5;
+        request->send(200);
+    });
+
+    server.on("/learning_p", HTTP_GET, [](AsyncWebServerRequest *request){
+        effect=6;
+        request->send(200);
+    });
+
+    server.on("/up_down", HTTP_GET, [](AsyncWebServerRequest *request){
+        effect=7;
+        request->send(200);
+    });
+
+    server.on("/fire_dep", HTTP_GET, [](AsyncWebServerRequest *request){
+        effect=8;
+        request->send(200);
+    });
+
+    server.on("/police_dep", HTTP_GET, [](AsyncWebServerRequest *request){
+        effect=9;
+        request->send(200);
+    });
+
+    server.on("/maayan_rainbow", HTTP_GET, [](AsyncWebServerRequest *request){
+        effect=10;
+        request->send(200);
+    });
+
+    server.on("/cubes", HTTP_GET, [](AsyncWebServerRequest *request){
+        effect=11;
+        request->send(200);
+    });
+
+    server.on("/squares", HTTP_GET, [](AsyncWebServerRequest *request){
+        effect=12;
+        request->send(200);
+    });
+
+    server.on("/wild", HTTP_GET, [](AsyncWebServerRequest *request){
+        effect=13;
+        request->send(200);
+    });
+
+    server.on("/HeatColors_p", HTTP_GET, [](AsyncWebServerRequest *request){
+        palette = HeatColors_p;
+        request->send(200);
+    });
+
+    server.on("/RainbowStripesColors_p", HTTP_GET, [](AsyncWebServerRequest *request){
+        palette = RainbowStripesColors_p;
+        request->send(200);
+    });
+
+    server.on("/PartyColors_p", HTTP_GET, [](AsyncWebServerRequest *request){
+        palette = PartyColors_p;
+        request->send(200);
+    });
+
+    server.on("/OceanColors_p", HTTP_GET, [](AsyncWebServerRequest *request){
+        palette = OceanColors_p;
+        request->send(200);
+    });
+
+    server.on("/ForestColors_p", HTTP_GET, [](AsyncWebServerRequest *request){
+        palette = ForestColors_p;
+        request->send(200);
+    });
+
+    server.on("/quagga_gp", HTTP_GET, [](AsyncWebServerRequest *request){
+        palette = quagga_gp;
+        request->send(200);
+    });
+
+    server.on("/aquamarinemermaid_gp", HTTP_GET, [](AsyncWebServerRequest *request){
+        palette = aquamarinemermaid_gp;
+        request->send(200);
+    });
+
+    server.on("/catfairy_gp", HTTP_GET, [](AsyncWebServerRequest *request){
+        palette = catfairy_gp;
+        request->send(200);
+    });
+
     server.begin();
 
 }

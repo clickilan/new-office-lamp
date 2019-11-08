@@ -68,7 +68,7 @@ nav {
     transition: 0.5s;
     border: none;
     color: black;
-    background-color: darkmagenta;
+    background-color: #f39422;
     padding: 15px 15px;
     text-decoration: none;
     cursor: pointer;
@@ -83,18 +83,14 @@ nav {
     background-position: right center;
 }
 
-#hadas_icon {
-    margin: 20px;
-}
-
-/* #hadas_icon:hover {
+/* #hadas_icon_off:hover {
     filter: grayscale();
     /* transform: scale(1.1); */
     /* transform: scale(1); */
     /* filter: drop-shadow(0px 0px 10px white); */
 } */
 
-#hadas_icon:active {
+#hadas_icon_off:active {
     filter: drop-shadow(0px 0px 10px white);
 }
 
