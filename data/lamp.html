@@ -52,7 +52,6 @@
 
     // Call a function repetatively with 2 Second interval
     setInterval(function() {getState()}, 2000); //2000mSeconds update rate
-    // setInterval(function(){console.log("test")}, 2000);
 
     function getState() {
         var xhttp = new XMLHttpRequest();
@@ -78,13 +77,6 @@
         xon.open("GET",b);
         xon.send();
     }
-
-    // function sendButton(b) {
-    //     var xhttpb = new XMLHttpRequest();
-    //     xhttpb.open("GET",b, true);
-    //     xhttpb.send();
-
-    // }
 
 </script>
 <head>
@@ -116,8 +108,13 @@
         <a id="off" onclick="setOn('off')" type="button" class="button">off</a>
         <!-- <a id="test" onclick="setOn('?jiggle')" type="button" class="button">off</a> -->
     </div>
+
     <!-- <hr> -->
     <div class="container">
+        <div class="box">
+            <h2>Brightness</h2>
+            <input type="range" min="1" max="100" value="50" class="slider-pic" id="myRange">
+        </div>
         <div class="box">
             <h2>Effects</h2>
             <div  class="box-grid" id="effects">

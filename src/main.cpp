@@ -391,6 +391,10 @@ void setup() {
         request->send(SPIFFS, "/officelight512.png", "image/png");
     });
 
+    server.on("/contrasticon.png", HTTP_GET, [](AsyncWebServerRequest *request){
+        request->send(SPIFFS, "/contrasticon.png", "image/png");
+    });
+
     server.on("/state", HTTP_GET, [](AsyncWebServerRequest *request){
         request->send(200, "text/plain", String(mode));
     });
