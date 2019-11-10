@@ -1,42 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <script>
+    var lampState;
     var palettes =[['rainbow','RainbowStripesColors_p'],['heat','HeatColors_p'],['party','PartyColors_p'],
     ['ocean','OceanColors_p'],['forest','ForestColors_p'],['quagga','quagga_gp'],['aqua-mermaid','aquamarinemermaid_gp'],['catfairy','catfairy_gp']];
     var effects = [['light','light'],['juggle','jiggle'],['wild','wild'],['glitter','glitter'],['march','march'],
     ['noise_16','noise_16'],['blendwave','blendwave'],['up_down','up_down'],['learning_p','learning_p'],
     ['fire_dep','fire_dep'],['police_dep','police_dep'],['cubes','cubes'],['squares','squares']];
-    function printBtn(rType,lista, btnColor, idSelect) {
-        for (var i = 0; i < lista.length; i++) {
-            var btn = document.createElement("a");
-            var t = document.createTextNode(lista[i][0]);
-            btn.className = "button";
-            // btn.type = "button";
-            btn.style.backgroundColor = btnColor;
-            btn.id = lista[i][1];
-            var cc = ['light','jiggle','wild','glitter','march','noise_16','blendwave','up_down','learning_p','fire_dep','police_dep','cubes','squares'];
-            console.log(cc[i]);
+    // function printBtn(rType,lista, btnColor, idSelect) {
+    //     for (var i = 0; i < lista.length; i++) {
+    //         var btn = document.createElement("a");
+    //         var t = document.createTextNode(lista[i][0]);
+    //         btn.className = "button";
+    //         // btn.type = "button";
+    //         btn.style.backgroundColor = btnColor;
+    //         btn.id = lista[i][1];
+    //         var cc = ['light','jiggle','wild','glitter','march','noise_16','blendwave','up_down','learning_p','fire_dep','police_dep','cubes','squares'];
+    //         console.log(cc[i]);
 
-            if(btn.addEventListener){
-                btn.addEventListener('click', function(){
-                    setOn(cc[i]);
-                });
-            }
-            else if(btn.attachEvent){
-                btn.attachEvent('onclick', function(){
-                    setOn(cc[i]);
-                });
-            }
+    //         if(btn.addEventListener){
+    //             btn.addEventListener('click', function(){
+    //                 setOn(cc[i]);
+    //             });
+    //         }
+    //         else if(btn.attachEvent){
+    //             btn.attachEvent('onclick', function(){
+    //                 setOn(cc[i]);
+    //             });
+    //         }
 
-            // btn.onclick = function() { setOn(cc[3]); };
-            // btn.addEventListener("click", setOn(cc[3]), false);
-            // btn.onclick = function() { setOn("?"+lista[i][1]) };
-            // btn.href = "?"+rType+"&"+lista[i][1];
-            if(lista!=palettes){btn.appendChild(t);}
-            // document.body.appendChild(btn);
-            document.getElementById(idSelect).appendChild(btn);
-        }
-    }
+    //         // btn.onclick = function() { setOn(cc[3]); };
+    //         // btn.addEventListener("click", setOn(cc[3]), false);
+    //         // btn.onclick = function() { setOn("?"+lista[i][1]) };
+    //         // btn.href = "?"+rType+"&"+lista[i][1];
+    //         if(lista!=palettes){btn.appendChild(t);}
+    //         // document.body.appendChild(btn);
+    //         document.getElementById(idSelect).appendChild(btn);
+    //     }
+    // }
     // websocket function //
     // var url = "ws://192.168.1.124/ws";
     // var ws = new WebSocket(url);
@@ -51,19 +52,37 @@
     // }
 
     // Call a function repetatively with 2 Second interval
-    setInterval(function() {getState()}, 2000); //2000mSeconds update rate
+    setInterval(function() {getState()}, 1000); //2000mSeconds update rate
 
     function getState() {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function(){
             if (this.readyState == 4 & this.status == 200){
-                if (this.response==1){document.getElementById("hadas_icon_off").id = "hadas_icon_on";}
-                else if (this.response==0){document.getElementById("hadas_icon_on").id = "hadas_icon_off";}
+                if (this.response==1){
+                    document.getElementById("hadas_icon_off").id = "hadas_icon_on";
+                    lampState=1;
+                }
+                else if (this.response==0){
+                    document.getElementById("hadas_icon_on").id = "hadas_icon_off";
+                    lampState=0;
+                }
 
             }
         }
         xhttp.open("GET","state", false);
         xhttp.send();
+    }
+    
+    function changeLampState() {
+        console.log(lampState);
+        if (lampState==0){
+            setOn('on');
+            console.log("test");
+        }
+        else if (lampState==1){
+            setOn('off');
+        }
+        
     }
 
     function setOn(b) {
@@ -98,58 +117,59 @@
     <!-- <h1>Office Light</h1> -->
     <div>
         <!-- <h2 id="display">test</h2> -->
-        <img src="officelight128.png" id="hadas_icon_off">
+        <img src="officelight128.png" id="hadas_icon_off" onclick="setOn('toggle')" style="cursor: pointer;">
     </div>
     <!-- <hr> -->
-    <div class="box" id="on_off">
-        <!-- <a id="on" href="?led_on" type='button' class="button">on</a> -->
-        <a id="on" onclick="setOn('on')" type="button" class="button">on</a>
-        <!-- <a id="off" href="?led_off" type='button' class="button">off</a> -->
-        <a id="off" onclick="setOn('off')" type="button" class="button">off</a>
-        <!-- <a id="test" onclick="setOn('?jiggle')" type="button" class="button">off</a> -->
-    </div>
+
 
     <!-- <hr> -->
-    <div class="container">
+    <div class="sub-container">
+        <!-- <div class="box" id="on_off">
+            <a id="on" onclick="setOn('on')" type="button" class="button">on</a>
+            <a id="off" onclick="setOn('off')" type="button" class="button">off</a>
+        </div> -->
         <div class="box">
-            <h2>Brightness</h2>
-            <input type="range" min="1" max="100" value="50" class="slider-pic" id="myRange">
+                <h2>Brightness</h2>
+                <input type="range" min="1" max="100" value="50" class="slider-pic" id="myRange">
         </div>
-        <div class="box">
-            <h2>Effects</h2>
-            <div  class="box-grid" id="effects">
-            <a id="light" onclick="setOn('light')" type="button" class="button">light</a>
-            <a id="jiggle" onclick="setOn('jiggle')" type="button" class="button">jiggle</a>
-            <a id="wild" onclick="setOn('wild')" type="button" class="button">wild</a>
-            <a id="glitter" onclick="setOn('glitter')" type="button" class="button">glitter</a>
-            <a id="march" onclick="setOn('march')" type="button" class="button">march</a>
-            <a id="blendwave" onclick="setOn('blendwave')" type="button" class="button">blendwave</a>
-            <a id="up_down" onclick="setOn('up_down')" type="button" class="button">up_down</a>
-            <a id="learning_p" onclick="setOn('learning_p')" type="button" class="button">learning_p</a>
-            <a id="fire_dep" onclick="setOn('fire_dep')" type="button" class="button">fire_dep</a>
-            <a id="police_dep" onclick="setOn('police_dep')" type="button" class="button">police_dep</a>
-            <a id="cubes" onclick="setOn('cubes')" type="button" class="button">cubes</a>
-            <a id="squares" onclick="setOn('squares')" type="button" class="button">squares</a>
-            <script>
-            </script>
+        <div class="container">
+
+            <div class="box">
+                <h2>Effects</h2>
+                <div  class="box-grid" id="effects">
+                <a id="light" onclick="setOn('light')" type="button" class="button">light</a>
+                <a id="jiggle" onclick="setOn('jiggle')" type="button" class="button">jiggle</a>
+                <a id="wild" onclick="setOn('wild')" type="button" class="button">wild</a>
+                <a id="glitter" onclick="setOn('glitter')" type="button" class="button">glitter</a>
+                <a id="march" onclick="setOn('march')" type="button" class="button">march</a>
+                <a id="blendwave" onclick="setOn('blendwave')" type="button" class="button">blendwave</a>
+                <a id="up_down" onclick="setOn('up_down')" type="button" class="button">up_down</a>
+                <a id="learning_p" onclick="setOn('learning_p')" type="button" class="button">learning_p</a>
+                <a id="fire_dep" onclick="setOn('fire_dep')" type="button" class="button">fire_dep</a>
+                <a id="police_dep" onclick="setOn('police_dep')" type="button" class="button">police_dep</a>
+                <a id="cubes" onclick="setOn('cubes')" type="button" class="button">cubes</a>
+                <a id="squares" onclick="setOn('squares')" type="button" class="button">squares</a>
+                <script>
+                </script>
+                </div>
             </div>
-        </div>
-        <!-- <hr> -->
-        <div class="box">
-            <h2>Palettes</h2>
-            <div class="box-grid" id="palettes">
-            <a id="RainbowStripesColors_p" onclick="setOn('RainbowStripesColors_p')" type="button" class="button">rainbow</a>
-            <a id="HeatColors_p" onclick="setOn('HeatColors_p')" type="button" class="button">heat</a>
-            <a id="PartyColors_p" onclick="setOn('PartyColors_p')" type="button" class="button">party</a>
-            <a id="OceanColors_p" onclick="setOn('OceanColors_p')" type="button" class="button">ocean</a>
-            <a id="ForestColors_p" onclick="setOn('ForestColors_p')" type="button" class="button">forest</a>
-            <a id="quagga_gp" onclick="setOn('quagga_gp')" type="button" class="button">quagga</a>
-            <a id="aquamarinemermaid_gp" onclick="setOn('aquamarinemermaid_gp')" type="button" class="button">aqua-mermaid</a>
-            <a id="catfairy_gp" onclick="setOn('catfairy_gp')" type="button" class="button">catfairy</a>
-            <script>
-            // printBtn("palette", palettes, '#f39422', 'palettes')
-            </script>        
-            </div>    
+            <!-- <hr> -->
+            <div class="box">
+                <h2>Palettes</h2>
+                <div class="box-grid" id="palettes">
+                <a id="RainbowStripesColors_p" onclick="setOn('RainbowStripesColors_p')" type="button" class="button">rainbow</a>
+                <a id="HeatColors_p" onclick="setOn('HeatColors_p')" type="button" class="button">heat</a>
+                <a id="PartyColors_p" onclick="setOn('PartyColors_p')" type="button" class="button">party</a>
+                <a id="OceanColors_p" onclick="setOn('OceanColors_p')" type="button" class="button">ocean</a>
+                <a id="ForestColors_p" onclick="setOn('ForestColors_p')" type="button" class="button">forest</a>
+                <a id="quagga_gp" onclick="setOn('quagga_gp')" type="button" class="button">quagga</a>
+                <a id="aquamarinemermaid_gp" onclick="setOn('aquamarinemermaid_gp')" type="button" class="button">aqua-mermaid</a>
+                <a id="catfairy_gp" onclick="setOn('catfairy_gp')" type="button" class="button">catfairy</a>
+                <script>
+                // printBtn("palette", palettes, '#f39422', 'palettes')
+                </script>        
+                </div>    
+            </div>
         </div>
     </div>
 </body>

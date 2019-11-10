@@ -320,9 +320,14 @@ void setup() {
 
     server.on("/toggle", HTTP_GET, [](AsyncWebServerRequest *request){
         mode = !mode;
-    }
-    request->send(200);
+        request->send(200);
     });
+
+        server.on("/brightness", HTTP_GET, [](AsyncWebServerRequest *request){
+        mode = !mode;
+        request->send(200);
+    });
+
 
     server.on("/light", HTTP_GET, [](AsyncWebServerRequest *request){
         effect=0;
