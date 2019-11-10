@@ -239,6 +239,7 @@ void setup() {
 
     // Route to load site index file
     server.on("/html", HTTP_GET, [](AsyncWebServerRequest *request){
+
         // if (request->hasParam("led_on")) {
         //     digitalWrite(internal_led,HIGH);
         //     // fill_solid(leds, NUM_LEDS, CRGB(0,0,100));
@@ -254,108 +255,16 @@ void setup() {
 
         //     led_state = "off";
         // }
-        if (request->hasParam("light")) {
-            digitalWrite(internal_led,LOW);
-            effect=0;
-            led_state = "Light";
-        }
-        if (request->hasParam("jiggle")) {
-            digitalWrite(internal_led,LOW);
-            effect=1;
-            led_state = "Jiggle";
-        }
-        if (request->hasParam("glitter")) {
-            digitalWrite(internal_led,LOW);
-            effect=2;
-            led_state = "Rainbow Glitter";
-        }
-        if (request->hasParam("march")) {
-            digitalWrite(internal_led,LOW);
-            effect=3;
-            led_state = "Rainbow March";
-        }
-        if (request->hasParam("noise_16")) {
-            digitalWrite(internal_led,LOW);
-            effect=4;
-            led_state = "Noise_16";
-        }
-        if (request->hasParam("blendwave")) {
-            digitalWrite(internal_led,LOW);
-            effect=5;
-            led_state = "Blendwave";
-        }
-        if (request->hasParam("learning_p")) {
-            digitalWrite(internal_led,LOW);
-            effect=6;
-            led_state = "Learning";
-        }
-        if (request->hasParam("up_down")) {
-            digitalWrite(internal_led,LOW);
-            effect=7;
-            led_state = "Up_down";
-        }
-        if (request->hasParam("fire_dep")) {
-            digitalWrite(internal_led,LOW);
-            effect=8;
-            led_state = "fire_dep";
-        }
-        if (request->hasParam("police_dep")) {
-            digitalWrite(internal_led,LOW);
-            effect=9;
-            led_state = "police_dep";
-        }
-        if (request->hasParam("maayan_rainbow")) {
-            digitalWrite(internal_led,LOW);
-            effect=10;
-            led_state = "maayan_rainbow";
-        }
-        if (request->hasParam("cubes")) {
-            digitalWrite(internal_led,LOW);
-            effect=11;
-            led_state = "cubes";
-        }
-        if (request->hasParam("squares")) {
-            digitalWrite(internal_led,LOW);
-            effect=12;
-            led_state = "squares";
-        }
-        if (request->hasParam("squares")) {
-            digitalWrite(internal_led,LOW);
-            effect=12;
-            led_state = "squares";
-        }
-        if (request->hasParam("wild")) {
-            digitalWrite(internal_led,LOW);
-            effect=13;
-            led_state = "wild";
-        }
-        if (request->hasParam("palette")) {
-            p = request->getParam(1);
-            if (p->name() == "HeatColors_p"){
-                palette = HeatColors_p;
-            }
-            else if (p->name() == "RainbowStripesColors_p"){
-                palette = RainbowStripesColors_p;
-            }
-            else if (p->name() == "OceanColors_p"){
-                palette = OceanColors_p;
-            }
-            else if (p->name() == "ForestColors_p"){
-                palette = ForestColors_p;
-            }
-            else if (p->name() == "PartyColors_p"){
-                palette = PartyColors_p;
-            }
-            else if (p->name() == "quagga_gp"){
-                palette = quagga_gp;
-            }
-            else if (p->name() == "aquamarinemermaid_gp"){
-                palette = aquamarinemermaid_gp;
-            }
-            else if (p->name() == "catfairy_gp"){
-                palette = catfairy_gp;
-            }
-        }
+        // if (request->hasParam("light")) {
+        //     digitalWrite(internal_led,LOW);
+        //     effect=0;
+        //     led_state = "Light";
+        // }
+        // if (request->hasParam("palette")) {
+        //     p = request->getParam(1);
+        //     if (p->name() == "HeatColors_p"){
+        //         palette = HeatColors_p;
+        //     }}
 
         request->send(SPIFFS, "/lamp.html", String(), false, processor);
         //request->send(SPIFFS, "/test.html", "text/html");
@@ -407,6 +316,12 @@ void setup() {
     server.on("/off", HTTP_GET, [](AsyncWebServerRequest *request){
         mode=0;
         request->send(200);
+    });
+
+    server.on("/toggle", HTTP_GET, [](AsyncWebServerRequest *request){
+        mode = !mode;
+    }
+    request->send(200);
     });
 
     server.on("/light", HTTP_GET, [](AsyncWebServerRequest *request){
