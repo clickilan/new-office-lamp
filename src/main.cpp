@@ -140,7 +140,7 @@ uint8_t gHue = 0;
 bool light_switch = false;
 int mode = 0;
 int effect = 0;
-
+int brightness = 50;
 struct color {
 	int r = 200;
 	int g = 200;
@@ -232,7 +232,7 @@ void setup() {
     delay(1000);
     fill_solid(leds, NUM_LEDS, CRGB::Black);
     FastLED.show();
-
+    FastLED.setBrightness(brightness);
     //setup websocket event//
     // ws.onEvent(onWsEvent);
     // server.addHandler(&ws);
